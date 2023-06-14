@@ -5,6 +5,9 @@ const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 
 module.exports = defineConfig({
   transpileDependencies: true,
+  devServer: {
+    port: 8082,
+  },
   // 对webpack进行配置
   configureWebpack: {
     // 配置一些插件
