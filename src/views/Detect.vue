@@ -128,7 +128,7 @@ export default {
       .catch(() => {
         this.microphoneStatus = "不可用";
       });
-      
+
     const connection =
       navigator.connection ||
       navigator.mozConnection ||
@@ -138,7 +138,7 @@ export default {
     } else {
       this.networkSpeed = "不支持";
     }
-
+    console.log("navigator.mediaDevices: ", navigator.mediaDevices)
     navigator.mediaDevices
       .enumerateDevices()
       .then((devices) => {
