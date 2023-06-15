@@ -4,28 +4,55 @@
     <div class="detect-box">
       <!--左侧盒子，显示摄像头画面和麦克风音量大小，及可供选择的设备资源-->
       <div class="video-box">
-        <video class="camera" ref="video" autoplay></video>      <!--将指定视频显示在网页上-->
+        <video
+          class="camera"
+          ref="video"
+          autoplay
+        ></video> <!--将指定视频显示在网页上-->
         <!--选项列表框-->
         <div class="option-list">
-          <br/>摄像头：
-          <select class="option" v-model="selectedCamera" @change="onCameraChange">
-            <option v-for="(device, index) in cameras" :key="index" :value="device.deviceId">{{ device.label }}</option>
+          <br />摄像头：
+          <select
+            class="option"
+            v-model="selectedCamera"
+            @change="onCameraChange"
+          >
+            <option
+              v-for="(device, index) in cameras"
+              :key="index"
+              :value="device.deviceId"
+            >{{ device.label }}</option>
           </select>
-          <br/>麦克风：
-          <select class="option" v-model="selectedMic" @change="onMicChange">
-            <option v-for="(device, index) in microphones" :key="index" :value="device.deviceId">{{ device.label }}</option>
+          <br />麦克风：
+          <select
+            class="option"
+            v-model="selectedMic"
+            @change="onMicChange"
+          >
+            <option
+              v-for="(device, index) in microphones"
+              :key="index"
+              :value="device.deviceId"
+            >{{ device.label }}</option>
           </select>
         </div>
         <!--麦克风音量监测-->
         <div class="volume-bar">
-          <el-icon><Microphone /></el-icon>
+          <el-icon>
+            <Microphone />
+          </el-icon>
           <!--用进度条展示当前麦克风的音量值 micVolume-->
-          <el-progress class="volume-progress"
-                       :percentage="micVolume"
-                       :stroke-width="10">
+          <el-progress
+            class="volume-progress"
+            :percentage="micVolume"
+            :stroke-width="10"
+          >
           </el-progress>
         </div>
-        <audio ref="audio" autoplay></audio>
+        <audio
+          ref="audio"
+          autoplay
+        ></audio>
       </div>
       <!--右侧盒子，显示检测结果-->
       <div class="list-box">
@@ -36,21 +63,31 @@
         <!--检测结果列表盒子-->
         <div class="list">
           <div class="items">
-            <el-icon class="icon"><Camera /></el-icon>
+            <el-icon class="icon">
+              <Camera />
+            </el-icon>
             摄像头<span class="status">{{ cameraStatus }}</span>
           </div>
           <div class="items">
-            <el-icon class="icon"><Microphone /></el-icon>
+            <el-icon class="icon">
+              <Microphone />
+            </el-icon>
             麦克风<span class="status">{{ microphoneStatus }}</span>
           </div>
           <div class="items">
-            <el-icon class="icon"><Monitor /></el-icon>
+            <el-icon class="icon">
+              <Monitor />
+            </el-icon>
             当前网速<span class="status1">{{ networkSpeed }}Mbps</span>
           </div>
         </div>
         <!--检测完成按钮-->
         <div class="detect-button">
-          <el-button id="button" type="primary" @click="handleClick">检测完成</el-button>
+          <el-button
+            id="button"
+            type="primary"
+            @click="handleClick"
+          >检测完成</el-button>
         </div>
       </div>
     </div>
@@ -62,71 +99,83 @@ export default {
   data() {
     return {
       cameras: [],
-      selectedCamera: '',
+      selectedCamera: "",
       microphones: [],
-      selectedMic: '',
+      selectedMic: "",
       micVolume: 0,
       cameraStatus: null,
       microphoneStatus: null,
       networkSpeed: null,
-    }
+    };
   },
 
   mounted() {
-    navigator.mediaDevices.enumerateDevices()
-        .then(devices => {
-          this.cameras = devices.filter(device => device.kind === 'videoinput');
-          this.microphones = devices.filter(device => device.kind === 'audioinput');
-          this.selectedCamera = this.cameras.length > 0 ? this.cameras[0].deviceId : '';
-          this.selectedMic = this.microphones.length > 0 ? this.microphones[0].deviceId : '';
-          this.startStream();
-        })
-        .catch(error => {
-          console.error('Failed to enumerate devices', error);
-        });
 
-    navigator.mediaDevices.getUserMedia({ video: true })
-        .then(() => {
-          this.cameraStatus = '可用';
-        })
-        .catch(() => {
-          this.cameraStatus = '不可用';
-        });
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then(() => {
+        this.cameraStatus = "可用";
+      })
+      .catch(() => {
+        this.cameraStatus = "不可用";
+      });
 
-    navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(() => {
-          this.microphoneStatus = '可用';
-        })
-        .catch(() => {
-          this.microphoneStatus = '不可用';
-        });
-
-    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then(() => {
+        this.microphoneStatus = "可用";
+      })
+      .catch(() => {
+        this.microphoneStatus = "不可用";
+      });
+      
+    const connection =
+      navigator.connection ||
+      navigator.mozConnection ||
+      navigator.webkitConnection;
     if (connection) {
       this.networkSpeed = connection.downlink.toFixed(2);
     } else {
-      this.networkSpeed = '不支持';
+      this.networkSpeed = "不支持";
     }
+
+    navigator.mediaDevices
+      .enumerateDevices()
+      .then((devices) => {
+        this.cameras = devices.filter((device) => device.kind === "videoinput");
+        this.microphones = devices.filter(
+          (device) => device.kind === "audioinput"
+        );
+        this.selectedCamera =
+          this.cameras.length > 0 ? this.cameras[0].deviceId : "";
+        this.selectedMic =
+          this.microphones.length > 0 ? this.microphones[0].deviceId : "";
+        this.startStream();
+      })
+      .catch((error) => {
+        console.error("Failed to enumerate devices", error);
+      });
   },
 
   methods: {
     startStream() {
-      navigator.mediaDevices.getUserMedia({
-        video: {
-          deviceId: this.selectedCamera
-        },
-        audio: {
-          deviceId: this.selectedMic
-        }
-      })
-          .then(stream => {
-            this.$refs.video.srcObject = stream;
-            this.$refs.audio.srcObject = stream;
-            this.startMicVolumeDetection(stream);
-          })
-          .catch(error => {
-            console.error('Failed to get user media', error);
-          });
+      navigator.mediaDevices
+        .getUserMedia({
+          video: {
+            deviceId: this.selectedCamera,
+          },
+          audio: {
+            deviceId: this.selectedMic,
+          },
+        })
+        .then((stream) => {
+          this.$refs.video.srcObject = stream;
+          this.$refs.audio.srcObject = stream;
+          this.startMicVolumeDetection(stream);
+        })
+        .catch((error) => {
+          console.error("Failed to get user media", error);
+        });
     },
 
     onCameraChange(event) {
@@ -156,15 +205,15 @@ export default {
 
     handleClick() {
       // 跳转页面前关闭摄像头和麦克风（跳转后过一会儿才关掉）
-      this.$refs.video.srcObject.getTracks().forEach(track => track.stop());
-      this.$refs.video.srcObject=null;
-      this.$refs.audio.srcObject.getTracks().forEach(track => track.stop());
-      this.$refs.video.srcObject=null;
+      this.$refs.video.srcObject.getTracks().forEach((track) => track.stop());
+      this.$refs.video.srcObject = null;
+      this.$refs.audio.srcObject.getTracks().forEach((track) => track.stop());
+      this.$refs.video.srcObject = null;
 
-      this.$router.push('/interview');
-    }
-  }
-}
+      this.$router.push("/interview");
+    },
+  },
+};
 </script>
 
 <style lang="scss">
