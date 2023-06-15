@@ -110,7 +110,24 @@ export default {
   },
 
   mounted() {
-
+    console.log("navigator.mediaDevices: ", navigator.mediaDevices)
+    navigator.mediaDevices
+      .enumerateDevices()
+      .then((devices) => {
+        this.cameras = devices.filter((device) => device.kind === "videoinput");
+        this.microphones = devices.filter(
+          (device) => device.kind === "audioinput"
+        );
+        this.selectedCamera =
+          this.cameras.length > 0 ? this.cameras[0].deviceId : "";
+        this.selectedMic =
+          this.microphones.length > 0 ? this.microphones[0].deviceId : "";
+        this.startStream();
+      })
+      .catch((error) => {
+        console.error("Failed to enumerate devices", error);
+      });
+      
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then(() => {
@@ -138,23 +155,7 @@ export default {
     } else {
       this.networkSpeed = "不支持";
     }
-    console.log("navigator.mediaDevices: ", navigator.mediaDevices)
-    navigator.mediaDevices
-      .enumerateDevices()
-      .then((devices) => {
-        this.cameras = devices.filter((device) => device.kind === "videoinput");
-        this.microphones = devices.filter(
-          (device) => device.kind === "audioinput"
-        );
-        this.selectedCamera =
-          this.cameras.length > 0 ? this.cameras[0].deviceId : "";
-        this.selectedMic =
-          this.microphones.length > 0 ? this.microphones[0].deviceId : "";
-        this.startStream();
-      })
-      .catch((error) => {
-        console.error("Failed to enumerate devices", error);
-      });
+    
   },
 
   methods: {
