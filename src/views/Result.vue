@@ -23,7 +23,7 @@ export default {
   },
   created() {
     // 从后端返回json数据的url地址获取题目
-    fetch("http://127.0.0.1:8081/nature10/all")
+    fetch("http://47.102.104.144:8081/nature10/all")
         .then(res => res.json())
         .then(res => {
           console.log(res)
@@ -49,7 +49,7 @@ export default {
       const params = {
         "userPhone": userPhone
       }
-      axios.get('http://127.0.0.1:8081/user/getScore', {
+      axios.get('http://47.102.104.144:8081/user/getScore', {
         data: params,
         headers: {
           'Content-Type': 'application/json'
@@ -87,7 +87,7 @@ export default {
         "nature": this.natures[this.natureRank-1].natureTittle,
         "answerTime": `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
       }
-      axios.post('http://127.0.0.1:8081/user/saveScore', params)
+      axios.post('http://47.102.104.144:8081/user/saveScore', params)
           .then(response => {
             console.log(response.data)
           })
