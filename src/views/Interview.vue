@@ -84,7 +84,7 @@ export default {
 
   async created() {
     // 从后端返回json数据的url地址获取题目
-    await fetch("http://47.102.104.144:8081/tittle10/all")
+    await fetch(this.$baseUrl + ":8081/tittle10/all")
         .then(res => res.json())
         .then(res => {
           console.log(res)

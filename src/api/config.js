@@ -4,7 +4,7 @@ import { ElMessage } from 'element-plus'
 //创建axios实例
 const Service = axios.create({
     // 设置baseURL地址
-    baseURL: 'http://47.102.104.144:8081',
+    // baseURL: 'http://47.102.104.144:8081',
     // //定义统一的请求头
     // headers: {
     //     'Content-Type': "	application/json;charset=UTF-8"
