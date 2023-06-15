@@ -7,6 +7,7 @@ module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
     port: 8082,
+    https: true
   },
   // 对webpack进行配置
   configureWebpack: {
