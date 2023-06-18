@@ -8,7 +8,7 @@ import "element-plus/dist/index.css"    // 一定要引入element的css样式，
 import * as ElementPlusIconsVue from "@element-plus/icons-vue"      // 导入element-ui库中的所有图标并进行全局注册
 
 // const baseUrl = "https://47.102.104.144"
-const baseUrl = "https://127.0.0.1"
+const baseUrl = "https://localhost"
 
 const app = createApp(App)
 
