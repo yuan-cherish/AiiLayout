@@ -125,7 +125,7 @@ export default {
     login() {
       this.$refs.loginFormRef.validate((valid) => {
         if (valid) {  // 表单校验合法
-          axios.post(this.$baseUrl + ":8081/user/login", this.loginForm)
+          axios.post(this.$baseUrl + ":8083/user/login", this.loginForm)
               .then(res => {
                 console.log(res.data)
                 console.log(res.status)
@@ -153,7 +153,7 @@ export default {
             this.$message.error("两次输入的密码不一致")
             return false;
           }
-          axios.post(this.$baseUrl + ":8081/user/register", this.registerForm)
+          axios.post(this.$baseUrl + ":8083/user/register", this.registerForm)
               .then(res => {
                 console.log(res.data)
                 console.log(res.status)
