@@ -24,6 +24,13 @@ export default {
       isLoggedin: localStorage.getItem("log-status") ? JSON.parse(localStorage.getItem("log-status")) : false,
     }
   },
+  async created(){
+    await fetch(this.$baseUrl + ":8088/version")
+        .then(res => res.json())
+        .then(res => {
+          console.log("flask version: ", res)
+        })
+  },
   mounted() {
     this.isLoggedin = localStorage.getItem("log-status")
   },
