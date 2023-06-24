@@ -9,11 +9,12 @@ import * as ElementPlusIconsVue from "@element-plus/icons-vue"      // 导入ele
 
 // const baseUrl = "https://47.102.104.144"
 const baseUrl = "https://172.30.217.233"
-// const baseUrl = "https://localhost"
+const baseFlaskUrl = "https://127.0.0.1"
 
 const app = createApp(App)
 
 app.config.globalProperties.$baseUrl = baseUrl;
+app.config.globalProperties.$baseFlaskUrl = baseFlaskUrl;
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
