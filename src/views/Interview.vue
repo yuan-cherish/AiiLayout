@@ -364,7 +364,7 @@ export default {
       this.options.forEach((answer) => {
         formData.append('answers[]', answer);
       });
-      axios.post('http://47.102.104.144:8088/getAnswer', formData)
+      axios.post(this.$baseUrl + ':8088/getAnswer', formData)
           .then(response => {
             console.log("视频处理成功！")
             // console.log(response)
@@ -405,7 +405,7 @@ export default {
       this.options.forEach((answer) => {
         formData.append('answers[]', answer);
       });
-      axios.post('http://47.102.104.144:8088/getAnswer', formData)
+      axios.post(this.$baseUrl + ':8088/getAnswer', formData)
           .then(response => {
             console.log("视频处理成功！")
             console.log(response)
