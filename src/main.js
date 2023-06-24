@@ -9,7 +9,7 @@ import * as ElementPlusIconsVue from "@element-plus/icons-vue"      // 导入ele
 
 const baseUrl = "https://47.102.104.144"
 // const baseUrl = "https://172.30.217.233"
-const baseFlaskUrl = "https://localhost"
+const baseFlaskUrl = "https://127.0.0.1"
 
 const app = createApp(App)
 
